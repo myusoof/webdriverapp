@@ -8,9 +8,9 @@ import 'pages/ThirdFragment.dart';
 
 class HomePage extends StatefulWidget {
   final drawerItems = [
-    new DrawerItem("About Me", Icons.rss_feed),
-    new DrawerItem("Installation", Icons.local_pizza),
-    new DrawerItem("Webdriver", Icons.info)
+    new DrawerItem("About Me"),
+    new DrawerItem("Installation"),
+    new DrawerItem("Webdriver")
   ];
 
   @override
@@ -64,7 +64,7 @@ class HomePageState extends State<HomePage> {
       var d = widget.drawerItems[i];
       drawerOptions.add(
           new ListTile(
-            leading: new Icon(d.icon),
+            trailing: Icon(Icons.arrow_right),
             title: new Text(d.title),
             selected: i == _selectedDrawerIndex,
             onTap: () => _onSelectItem(i),
@@ -73,9 +73,15 @@ class HomePageState extends State<HomePage> {
     }
 
     return SafeArea(
-      child: new Scaffold(
-        appBar: new AppBar(
-          title: new Text(widget.drawerItems[_selectedDrawerIndex].title),
+      child: Scaffold(
+        appBar: AppBar(
+          backgroundColor: secondaryColor,
+          title: Row(
+            mainAxisAlignment: MainAxisAlignment.spaceAround,
+            children: <Widget>[
+              Text(widget.drawerItems[_selectedDrawerIndex].title),
+            ],
+          ),
         ),
         drawer: Container(
           width: 200,
