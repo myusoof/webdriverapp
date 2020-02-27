@@ -45,6 +45,21 @@ class HomePageState extends State<HomePage> {
   @override
   Widget build(BuildContext context) {
     var drawerOptions = <Widget>[];
+    drawerOptions.add(
+        Container(
+      height: 70,
+      child:  DrawerHeader(
+        child: Row(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: <Widget>[
+            Center(child: Text('Welcome', style: txtStyle_drawer_header,)),
+          ],
+        ),
+        decoration: BoxDecoration(
+          color: Colors.amber,
+        ),
+      ),
+    ));
     for (var i = 0; i < widget.drawerItems.length; i++) {
       var d = widget.drawerItems[i];
       drawerOptions.add(
@@ -68,22 +83,7 @@ class HomePageState extends State<HomePage> {
             child: Center(
               child: ListView(
                 padding: EdgeInsets.zero,
-                children: <Widget>[
-                  Container(
-                    height: 70,
-                    child:  DrawerHeader(
-                      child: Row(
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        children: <Widget>[
-                          Center(child: Text('Welcome', style: txtStyle_drawer_header,)),
-                        ],
-                      ),
-                      decoration: BoxDecoration(
-                        color: Colors.amber,
-                      ),
-                    ),
-                  )
-                ],
+                children: drawerOptions,
               ),
             ),
           ),
