@@ -9,6 +9,7 @@ class _ThirdFragmentState extends State<ThirdFragment> {
   @override
   Widget build(BuildContext context) {
     return Container(
+      color: Colors.blue,
     );
   }
 }

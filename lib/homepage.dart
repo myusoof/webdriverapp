@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:wediver_app_2/pages/samplehtml.dart';
 
 import 'commonwidgets/DrawerItem.dart';
 import 'commonwidgets/constants.dart';
@@ -8,9 +9,15 @@ import 'pages/ThirdFragment.dart';
 
 class HomePage extends StatefulWidget {
   final drawerItems = [
-    new DrawerItem("About Me"),
+    new DrawerItem("Webdriver"),
     new DrawerItem("Installation"),
-    new DrawerItem("Webdriver")
+    new DrawerItem("Element Identification"),
+    new DrawerItem("Samples"),
+    new DrawerItem("Build Tool"),
+    new DrawerItem("BDD Cucumber"),
+    new DrawerItem("Automation Framework"),
+    new DrawerItem("Page Object Model"),
+    new DrawerItem("About Me"),
   ];
 
   @override
@@ -25,15 +32,16 @@ class HomePageState extends State<HomePage> {
 
   _getDrawerItemWidget(int pos) {
     switch (pos) {
-      case 0:
-        return new AboutMe();
+      case 0 :
+        return SampleHtml();
       case 1:
         return new SecondFragment();
       case 2:
         return new ThirdFragment();
-
+      case 8:
+        return new AboutMe();
       default:
-        return new Text("Error");
+        return Center(child: new Text("Under Implementation!!!", style: TextStyle(fontSize: 30,fontWeight: FontWeight.bold),));
     }
   }
 
