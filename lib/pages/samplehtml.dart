@@ -1,10 +1,9 @@
-import 'dart:io';
-
-import 'package:flutter/foundation.dart';
+import 'dart:async';
+import 'dart:convert';
 import 'package:flutter/material.dart';
-import 'package:flutter/rendering.dart';
 import 'package:flutter/services.dart';
-import 'package:flutter_widget_from_html/flutter_widget_from_html.dart';
+import 'package:webview_flutter/webview_flutter.dart';
+
 
 class SampleHtml extends StatefulWidget {
   @override
@@ -12,46 +11,26 @@ class SampleHtml extends StatefulWidget {
 }
 
 class _SampleHtmlState extends State<SampleHtml> {
-  var _pageController = PageController();
-
+  WebViewController _controller ;
 
   @override
   Widget build(BuildContext context) {
-    Future<String> loadAsset() async {
-      return await rootBundle.loadString('assets/webdriver.html');
-    }
-
-    return Container(
-      child: PageView(
-        controller: _pageController,
-        scrollDirection: Axis.vertical,
-        children: <Widget>[
-         FutureBuilder(
-                future: loadAsset(),
-                builder: (context, snapshot){
-                  if(snapshot.hasData){
-                    return HtmlWidget(snapshot.data, webView: true,);
-                  }else{
-                   return Dialog(
-                      child: new Row(
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        children: [
-                          new CircularProgressIndicator(backgroundColor: Colors.green,),
-                          new Text("Loading"),
-                        ],
-                      ),
-                    );
-                  }
-                },
-            ),
-          Scaffold(
-            body: Container(
-              child: Center(child: Text("Page 2")),
-              color: Colors.blue,
-            ),
-          )
-        ],
-      ),
+    return Scaffold(
+      body: Builder(builder: (BuildContext context) {
+        return WebView(
+          initialUrl: 'about:blank',
+          javascriptMode: JavascriptMode.unrestricted,
+          onWebViewCreated: (WebViewController webViewController) async {
+            _controller = webViewController;
+            await loadHtmlFromAssets('assets/webdriver.html', _controller);
+          },
+        );
+      }),
     );
+  }
+
+  Future<void> loadHtmlFromAssets(String filename, controller) async {
+    String fileText = await rootBundle.loadString(filename);
+    controller.loadUrl(Uri.dataFromString(fileText, mimeType: 'text/html', encoding: Encoding.getByName('utf-8')).toString());
   }
 }

@@ -13,6 +13,8 @@ dependencies:
   cupertino_icons: ^0.1.2
   flutter_widget_from_html: 0.3.2+1
   path_provider: 1.6.1
+  webview_flutter: 0.3.19+8
+
 
 
 dev_dependencies:
