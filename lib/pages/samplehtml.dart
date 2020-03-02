@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
@@ -27,14 +29,19 @@ class _SampleHtmlState extends State<SampleHtml> {
          FutureBuilder(
                 future: loadAsset(),
                 builder: (context, snapshot){
-                  if(snapshot.data == null){
-                    return Container(
-                      child: Center(
-                        child: Text("Loading..."),
+                  if(snapshot.hasData){
+                    return HtmlWidget(snapshot.data, webView: true,);
+                  }else{
+                   return Dialog(
+                      child: new Row(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: [
+                          new CircularProgressIndicator(backgroundColor: Colors.green,),
+                          new Text("Loading"),
+                        ],
                       ),
                     );
                   }
-                  return Text(snapshot.data);
                 },
             ),
           Scaffold(
