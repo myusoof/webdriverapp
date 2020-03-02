@@ -12,6 +12,8 @@ dependencies:
 
   cupertino_icons: ^0.1.2
   flutter_widget_from_html: 0.3.2+1
+  path_provider: 1.6.1
+
 
 dev_dependencies:
   flutter_test:
@@ -20,6 +22,7 @@ dev_dependencies:
 flutter:
   assets:
     - images/
+    - assets/
 
   uses-material-design: true
 
