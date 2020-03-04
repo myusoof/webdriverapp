@@ -12,18 +12,38 @@ class SampleHtml extends StatefulWidget {
 
 class _SampleHtmlState extends State<SampleHtml> {
   WebViewController _controller ;
+  bool isLoaded;
 
+  @override
+  void initState() {
+    super.initState();
+    isLoaded=false;
+  }
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       body: Builder(builder: (BuildContext context) {
-        return WebView(
-          initialUrl: 'about:blank',
+        return Stack(
+          children: <Widget>[
+            WebView(
+              initialUrl: "about:blank",
+              onWebViewCreated: (WebViewController webViewController) async{
+                _controller = webViewController;
+                await loadHtmlFromAssets('assets/webdriver.html', _controller);
+//                _controller.loadUrl("https://www.iflutter.in/flutter-webview/");
+              },
+              onPageFinished: (value){
+                setState(() {
+                  isLoaded=true;
+                });
+              },
+            ),
+            (isLoaded)?Container():Center(child: CircularProgressIndicator(),)
+          ],
+        );
+         WebView(
+          initialUrl: 'https://www.iflutter.in',
           javascriptMode: JavascriptMode.unrestricted,
-          onWebViewCreated: (WebViewController webViewController) async {
-            _controller = webViewController;
-            await loadHtmlFromAssets('assets/webdriver.html', _controller);
-          },
         );
       }),
     );
