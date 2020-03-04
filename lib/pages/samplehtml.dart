@@ -25,18 +25,24 @@ class _SampleHtmlState extends State<SampleHtml> {
       body: Builder(builder: (BuildContext context) {
         return Stack(
           children: <Widget>[
-            WebView(
-              initialUrl: "about:blank",
-              onWebViewCreated: (WebViewController webViewController) async{
-                _controller = webViewController;
-                await loadHtmlFromAssets('assets/webdriver.html', _controller);
+            Padding(
+              padding: const EdgeInsets.all(8.0),
+              child: Padding(
+                padding: const EdgeInsets.all(8.0),
+                child: WebView(
+                  initialUrl: "file:///android_asset/flutter_assets/assets/webdriver.html",
+                  onWebViewCreated: (WebViewController webViewController) async{
+                    _controller = webViewController;
+                    //await loadHtmlFromAssets('assets/webdriver.html', _controller);
 //                _controller.loadUrl("https://www.iflutter.in/flutter-webview/");
-              },
-              onPageFinished: (value){
-                setState(() {
-                  isLoaded=true;
-                });
-              },
+                  },
+                  onPageFinished: (value){
+                    setState(() {
+                      isLoaded=true;
+                    });
+                  },
+                ),
+              ),
             ),
             (isLoaded)?Container():Center(child: CircularProgressIndicator(),)
           ],
