@@ -21,37 +21,30 @@ class _SampleHtmlState extends State<SampleHtml> {
   }
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      body: Builder(builder: (BuildContext context) {
-        return Stack(
-          children: <Widget>[
-            Padding(
-              padding: const EdgeInsets.all(8.0),
-              child: Padding(
-                padding: const EdgeInsets.all(8.0),
-                child: WebView(
-                  initialUrl: "file:///android_asset/flutter_assets/assets/webdriver.html",
-                  onWebViewCreated: (WebViewController webViewController) async{
-                    _controller = webViewController;
-                    //await loadHtmlFromAssets('assets/webdriver.html', _controller);
-//                _controller.loadUrl("https://www.iflutter.in/flutter-webview/");
-                  },
-                  onPageFinished: (value){
-                    setState(() {
-                      isLoaded=true;
-                    });
-                  },
-                ),
-              ),
-            ),
-            (isLoaded)?Container():Center(child: CircularProgressIndicator(),)
-          ],
-        );
-         WebView(
-          initialUrl: 'https://www.iflutter.in',
-          javascriptMode: JavascriptMode.unrestricted,
-        );
-      }),
+    return Scaffold(body: getListTile(context));
+  }
+  Widget getListTile(BuildContext context) {
+    return SafeArea(
+      child: CustomScrollView(slivers: [
+        SliverList(
+          delegate: SliverChildListDelegate(
+              [
+                Image(image: AssetImage('assets/images/avatarimage.jpg'),height: 500,width: double.infinity,),
+              ]
+          ),
+        ),
+        SliverFillRemaining(
+            child:WebView(
+                initialUrl: 'about:blank',
+                javascriptMode: JavascriptMode.unrestricted,
+                onWebViewCreated: (WebViewController webViewController) async {
+                  _controller = webViewController;
+                  await loadHtmlFromAssets('assets/webdriver.html', _controller);
+                }
+            )
+        )
+      ]
+      ),
     );
   }
 
